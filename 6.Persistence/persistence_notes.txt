@@ -1,0 +1,8 @@
+What is Persistence:
+Persistence in langGraph refers to the ability to save and restore the state of a workflow over time
+
+
+Imp) 
+1. Persistence in langGraph is implemented using checkpointers.
+2. Checkpointers works by keeping checkpoints at every superstep in the whole graph.
+3. So whenever execution happens at every checkpoint state value is stored in the database for future use.

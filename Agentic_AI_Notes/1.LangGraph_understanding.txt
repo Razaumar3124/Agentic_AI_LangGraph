@@ -1,0 +1,88 @@
+What is LangGraph?
+LangGraph is an orchestration framework for building stateful, multi-step llm workflow.
+
+It enables advanced features like parallelism, loops, branching, memory and resumability --- making it ideal for agentic and production grade AI applications.
+
+It models your logic as a graph of nodes(tasks) and edges (routing) instead of a linear chain.
+
+
+LLM workflows:
+1. LLM workflows are a step by step process using which we can build complex LLM based applications.
+2. Eachh step in a workflow performs a distinct task -- such as prompting, reasoning, tool calling, memory access and decision making.
+3. Workflows can be linear, parallel, branched, looped, allowing for complex behaviours like retries, multi-agent communication, or tool-augmented reasoning.
+4. Common workflow.
+
+
+Graphs, Nodes and Edges:
+The system generates an essay topic, collects the student's submission, and evaluates it in parallel on depth of analysis, language quality, and clarity of thought. Based on the combined score, it either gives feedback for improvement or approves the essay.
+
+1. Generate Topic
+→ System generates a relevant UPSC-style essay topic and presents it to the student.
+
+2. CollectEssay
+Student writes and submits the essay based on the generated topic.
+
+3. EvaluateEssay (Parallel Evaluation Block)
+→ Three evaluation tasks run in parallel:
+EvaluateDepth - Analyzes depth of analysis, argument strength, and critical thinking.
+Evaluate Language - Checks grammar, vocabulary, fluency, and tone.
+EvaluateClarity - Assesses coherence, logical flow, and clarity of thought.
+
+4. AggregateResults
+→ Combines the three scores and generates a total score (e.g., out of 15).
+
+5. Conditional Routing
+→ Based on the total score:
+If score meets threshold →go to ShowSuccess
+If score is below threshold → go to GiveFeedback
+
+6. GiveFeedback
+→ Provides targeted suggestions for improvement in weak areas.
+
+7. CollectRevision (optional loop)
+→ Student resubmits the revised essay.
+→ Loop back to EvaluateEssay
+
+8. ShowSuccess
+→ Congratulates the student and ends the flow
+
+
+Imp) State:
+In LangGraph, state is the shared memory that flows through you workflow -- it holds all the data being passed between nodes as your graph runs.
+
+
+Imp) Reducers:
+Reducers in langGraph define how updates from nodes are applied to the shared state.
+Each key in the state can have its own reducer, which determines whether new data replaces, merges, or adds to the existing value.
+
+
+Imp) LangGraph Execution models is heavily inspired by google pragel and its used everywhere throughout google. basically google pragel is a system which can do large scale graph processing.
+
+
+Imp) LangGraph Execution model:
+1. Graph Defination:
+	you define:
+	- the state schema
+	- Nodes (functions that performs tasks)
+	- Edges (which node connects to which)
+
+2. Compilation:
+	You call .compile() on the stateGraph. This checks the graph structure and prepares it for execution.
+
+3. Invocation:
+	You run the graph with .invoke(initial_state). LangGraph sends the initial state as a message to the entry node.
+
+4. Super-Steps begins:
+	Execution proceeds in rounds.
+	In each round (super-step):
+	- All active nodes (those that receives messages) run in parallel.
+	- Each returns an updated (message) to the state.
+
+5. Message Passing and Node Activation:
+	The messages are passed to downstream nodes via edges.
+	Nodes the receive messages becomes active for the next round.
+
+6. Halting Condition:
+	Execution stops when:
+	- No nodes are active, and
+	- No messages are transit.
