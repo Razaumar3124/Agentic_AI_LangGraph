@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "faiss-cpu>=1.12.0",
     "ipykernel>=7.1.0",
     "jupyterlab>=4.4.10",
     "langchain>=1.0.3",
@@ -12,7 +13,11 @@ dependencies = [
     "langchain-experimental>=0.0.42",
     "langchain-google-genai>=3.0.1",
     "langchain-groq>=1.0.0",
+    "langchain-huggingface>=1.0.1",
     "langgraph>=1.0.2",
+    "langgraph-checkpoint-sqlite>=3.0.0",
+    "pypdf>=6.2.0",
     "python-dotenv>=1.2.1",
+    "sentence-transformers>=5.1.2",
     "streamlit>=1.51.0",
 ]
