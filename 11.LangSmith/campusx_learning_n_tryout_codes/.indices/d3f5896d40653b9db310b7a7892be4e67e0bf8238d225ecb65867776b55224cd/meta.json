@@ -1,0 +1,6 @@
+{
+  "pdf_path": "D:\\Rnt_Tasks\\LangChain Learnings\\Agentic_AI_LangGraph\\11.LangSmith\\campusx_learning_n_tryout_codes\\islr.pdf",
+  "chunk_size": 1000,
+  "chunk_overlap": 150,
+  "embedding_model": "sentence-transformers/all-MiniLM-L6-v2"
+}
